@@ -12,7 +12,7 @@ if (-not (Test-Path -Path $logDirectory)) {
 }
 
 # Function to download the MSI file if not present
-function Save-File {
+function Download-File {
     param (
         [string]$url,
         [string]$destinationPath
