@@ -1,0 +1,32 @@
+# Build: packer build --var-file=win10x64.pkrvars.hcl --var-file=../proxmox.pkrvars.hcl win10x64.pkr.hcl
+
+# VM settings
+vm_id                = 125
+vm_name              = "Win10-Cloudbase"
+template_name        = "Win10-Template-Cloudbase"
+template_description = "Windows 10 Pro Template"
+os                   = "win10"
+cores                = 2
+sockets              = 2
+memory               = 4096
+cpu_type             = "kvm64"
+
+# Disk
+disk_size         = "30G"
+disk_format       = "raw"
+disk_storage_pool = "storage"
+iso_storage_pool  = "storage"
+
+# Network
+bridge   = "vmbr0"
+firewall = true
+
+# Builder credentials (must match autounattend.xml)
+builder_username = "Administrator"
+builder_password = "CHANGE_ME"
+
+# Path to Windows 10 ISO on the Proxmox host
+iso_file = "storage:iso/Windows-64.iso"
+
+# ISO with the QEMU guest agent / VirtIO drivers
+agent_iso_file = "storage:iso/quemu_agent.iso"

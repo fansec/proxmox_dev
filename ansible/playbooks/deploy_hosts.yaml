@@ -1,8 +1,8 @@
 - name: Deploy VMs
   hosts: localhost
   vars_files:
-      -  ../vars/vars_node.yaml
       -  ../vars/vars_hosts.yaml
+      -  ../vars/vars_node.yaml
   gather_facts: yes
   tasks:
     - name: Deploy and Update VM linux

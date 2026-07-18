@@ -1,0 +1,4 @@
+api_host: CHANGE_ME:8006
+api_user: root@pam
+api_password: "CHANGE_ME"
+node: CHANGE_ME

@@ -1,4 +1,4 @@
-id: ansible_ssh_remote_99
+id: ansible_ssh_deploy_test_import
 namespace: demo
 
 tasks:
@@ -15,8 +15,7 @@ tasks:
     inputFiles:
       inventory.ini: "{{ read('/ansible/inventory.ini') }}"
       id_rsa: "{{ secret('SSH_KEY') }}"
-    commands:
-      #- ansible-galaxy collection install community.general  
+    commands: 
       - ansible-playbook --key-file id_rsa ansible/playbooks/deploy_hosts.yaml -i ansible/hosts -vvv
     env:
       ANSIBLE_HOST_KEY_CHECKING: "False"

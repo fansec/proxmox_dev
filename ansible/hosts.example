@@ -1,7 +1,7 @@
 [win]
 [win:vars]  
 ansible_user=Administrator
-ansible_password=P@ssW0rd1!!!
+ansible_password=CHANGE_ME
 ansible_connection=winrm
 ansible_port=5985
 ansible_winrm_server_cert_validation=ignore
@@ -9,4 +9,4 @@ ansible_become_method = runas
 [linux]
 [linux:vars]  
 ansible_user=admin
-ansible_password=P@ssW0rd1!!!
+ansible_password=CHANGE_ME

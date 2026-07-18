@@ -1,44 +1,64 @@
-# Kestra Automation for Proxmox
+# Windows 10 Pro Template Build for Proxmox
 
-This repository automates VM template creation, deployment, and cleanup in Proxmox using Kestra, Docker, Packer, and Ansible. Tested on **Ubuntu 24.04** and **CentOS 9**.
+This repository contains configuration files for building a Windows 10 Pro VM template using Packer on a Proxmox server. The build automates the Windows installation and configuration process.
 
-## Prerequisites
+## Requirements
 
-- A new, clean VM that can connect to your Proxmox server
-- Docker and Docker Compose installed on the VM
-- Access to Proxmox credentials for API usage
-- Download the ISOs for ubuntu 24.04 desktop/server, win10, win2019 aswell quemu_agent.iso on your storage
+- **Packer**: Version 1.11.0 or higher
+- **Proxmox**: Proxmox VE with API access
+- **Proxmox Plugins**: `proxmox` (version >=1.1.8) and `windows-update` (version >=0.16.7)
+- **Oscdim**: Or xorriso/mkisofts/hdiutil supported by packer (needed for building the ISO for local 'mount' files)
 
-## Setup Instructions
+## Files Overview
 
-1. **Clone the Repository**  
-   Start by cloning this repository on your VM:
-   ```bash
-   git clone https://github.com/fansec/proxmox_dev.git
-   cd proxmox_dev
+- **`autounattend.xml`**: Automated Windows installation configuration file.
+- **`WinRM-Config.ps1`**: PowerShell script to enable WinRM.
+- **`Install-Agent.ps1`**: PowerShell script to install qemu-guest-agent, needed for connection. Similar to VMware tools for vSphere.
+- **`win10x64.pkr.hcl`**: Packer configuration file for building the Windows 10 VM.
+- **`win10x64.pkrvars.hcl`**: Variables specific to the Windows 10 VM build.
+- **`proxmox.pkrvars.hcl`**: Variables for connecting to the Proxmox server.
 
-2. **Edit Proxmox Creds** 
+## Setup
 
-Update the Proxmox credentials in either of the following files:
-- Namespace Configuration (recommended for demo): Modify credentials in the namespace configuration files.
-- Direct Configuration: Edit the credentials and values for the storage and node directly in:
-    - Packer Configuration (proxmox.pkrvars.hcl)
-    - Ansible Variables (vars_node)
+1. **Update Variables**: Modify the `win10x64.pkrvars.hcl` and `proxmox.pkrvars.hcl` files with your specific settings.
 
-3. **Start Docker Services** 
+   - `win10x64.pkrvars.hcl`:
+     ```hcl
+     vm_name                     = "Win10Pro-Template"
+     template_name               = "Win10Pro-Template"
+     os                          = "win10"
+     cores                       = 2
+     sockets                     = 2
+     memory                      = 4112
+     cpu_type                    = "kvm64"
+     vm_cdrom_type               = "sata"
+     
+     disk_size                   = "40G"
+     disk_format                 = "raw"
+     disk_storage_pool           = "local-lvm"
+     iso_storage_pool            = "storage"
+     
+     vm_network                  = "vmbr0"
+     firewall                    = "true"
+     bridge                      = "vmbr0"
+     
+     builder_username            = "Administrator"
+     builder_password            = "CHANGE_ME"
+     
+     iso_file                    = "local:iso/Windows-64.iso"
+     ```
 
-Run Docker Compose to initialize the Kestra environment:
- ``` sudo docker-compose up -d ```
+    ## Reusable vars
+   - `proxmox.pkrvars.hcl`:
+     ```hcl
+     proxmox_host              = "192.168.1.1:8006"
+     proxmox_node              = "dev"
+     proxmox_api_user          = "root@pam"
+     proxmox_api_password      = "Password"
+     proxmox_storage           = "storage"
+     ```
 
-4. **Run the Flows** 
-
-Three flows are available for automating different tasks:
-- Template Creation: Builds VM templates for Ubuntu 24.04 (desktop and server), Windows 10 x64, and Windows 2029.
-- VM Deployment: Deploys the VMs 4 VMs.
-- Cleanup.
-
-## Subfolder Documentation
-
-- [Ansible Role Documentation](./ansible/README.md) - Detailed information about the `ansible` playbooks, including tasks, variables, and handlers.
-- [Packer Role Documentation](./packer/README.md) - Detailed information about the `packer` deployments.
-- [Kestra Role Documentation](./kestra/README.md) - Detailed information about the `kestra` automation.
+2. **Install Packer Plugins**: Ensure the required Packer plugins are installed by running:
+   ```sh
+   packer init .
+   packer build --var-file=win10x64.pkrvars.hcl --var-file=../proxmox.pkrvars.hcl win10x64.pkr.hcl

@@ -1,5 +1,5 @@
-id: ansible_ssh_remote_99
-namespace: demo
+id: ansible_ssh_delete_test_import
+namespace: test222
 
 tasks:
   - id: ansible_task
@@ -13,11 +13,14 @@ tasks:
     beforeCommands:
       - pip install -r ansible/requirements.txt > /dev/null
     inputFiles:
-      inventory.ini: "{{ read('/ansible/inventory.ini') }}"
+      inventory.ini: |
+        TARGET_IP
+      myplaybook.yml: |
+        ---
+        - hosts: TARGET_IP
       id_rsa: "{{ secret('SSH_KEY') }}"
     commands:
-      #- ansible-galaxy collection install community.general  
-      - ansible-playbook --key-file id_rsa ansible/playbooks/deploy_hosts.yaml -i ansible/hosts -vvv
+      - ansible-playbook ansible/playbooks/delete_hosts.yaml -i ansible/hosts
     env:
       ANSIBLE_HOST_KEY_CHECKING: "False"
       ANSIBLE_REMOTE_USER: "admin"

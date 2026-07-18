@@ -1,0 +1,14 @@
+{
+  "id": "string",
+  "title": "A",
+  "description": "string",
+  "tags": [
+    "string"
+  ],
+  "includedTasks": [
+    "string"
+  ],
+  "publishedAt": "1970-01-01T00:00:00.000Z",
+  "deleted": false,
+  "flow": "A"
+}

@@ -1,4 +1,4 @@
-id: packer_all
+id: packer_all_99
 namespace: demo
 
 tasks:
@@ -77,3 +77,4 @@ tasks:
             packer build --var-file=win2019.pkrvars.hcl --var-file=../proxmox.pkrvars.hcl win2019.pkr.hcl 
 
   
+

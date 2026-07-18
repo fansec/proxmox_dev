@@ -1,0 +1,8 @@
+{
+  "id": "demo_namespace",
+  "description": "This is a demo namespace for testing",
+  "labels": {
+    "env": "development",
+    "team": "devops"
+  }
+}

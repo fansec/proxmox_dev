@@ -3,7 +3,7 @@ datasources:
     url: jdbc:postgresql://postgres:5432/kestra
     driverClassName: org.postgresql.Driver
     username: kestra
-    password: k3str4
+    password: CHANGE_ME
 kestra:
   server:
     basic-auth:
@@ -20,3 +20,5 @@ kestra:
     tmp-dir:
       path: /tmp/kestra-wd/tmp
   url: http://localhost:8080/
+  tutorial-flows:
+    enabled: false

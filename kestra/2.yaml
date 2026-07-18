@@ -1,0 +1,23 @@
+id: push_to_git
+namespace: demo
+
+tasks:
+  - id: push_flows
+    type: io.kestra.plugin.git.PushFlows
+    sourceNamespace: dev
+    targetNamespace: prod
+    flows: "*"
+    includeChildNamespaces: true
+    gitDirectory: _flows
+    url: https://github.com/kestra-io/scripts
+    username: git_username
+    password: "{{ secret('GITHUB_ACCESS_TOKEN') }}"
+    branch: kestra
+    commitMessage: "add flows {{ now() }}"
+    dryRun: true 
+
+triggers:
+  - id: every_full_hour
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/15 * * * *"
+

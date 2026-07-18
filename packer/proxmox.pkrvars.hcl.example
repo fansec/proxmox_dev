@@ -1,0 +1,6 @@
+# Reusable vars
+proxmox_host         = "CHANGE_ME:8006"
+proxmox_node         = "CHANGE_ME"
+proxmox_api_user     = "root@pam"
+proxmox_api_password = "CHANGE_ME"
+proxmox_storage      = "storage"

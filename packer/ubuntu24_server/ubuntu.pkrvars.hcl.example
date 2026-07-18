@@ -1,0 +1,29 @@
+# Build: packer build --var-file=ubuntu.pkrvars.hcl --var-file=../proxmox.pkrvars.hcl ubuntu.pkr.hcl
+
+# VM settings
+vm_id                = 123
+vm_name              = "Ubuntu24.04.Server"
+template_name        = "Ubuntu24.04.Server"
+template_description = "Ubuntu 24.04 Server Template"
+os                   = "l26"
+cores                = 2
+sockets              = 2
+memory               = 4096
+cpu_type             = "kvm64"
+
+# Disk
+disk_size         = "8G"
+disk_format       = "raw"
+disk_storage_pool = "storage"
+iso_storage_pool  = "storage"
+
+# Network
+bridge   = "vmbr0"
+firewall = true
+
+# Builder credentials (must match data/user-data)
+builder_username = "fansec"
+builder_password = "CHANGE_ME"
+
+# Path to Ubuntu 24.04 Server ISO on the Proxmox host
+iso_file = "storage:iso/ubuntu_24_server.iso"

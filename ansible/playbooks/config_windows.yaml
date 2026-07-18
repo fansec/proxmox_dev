@@ -1,8 +1,7 @@
 - name: Config VMs
   hosts: win
   vars_files:
-      -  ../vars/vars_node.yml
+      -  ../vars/vars_deploy.yml
   gather_facts: yes
   roles: 
     - role: roles/configure/windows/test
-    # do your stuff

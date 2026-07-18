@@ -6,10 +6,10 @@
     api_password: "{{api_password}}"
     node: "{{node}}"
     name: "ubuntu24-{{ item }}"
-    vmid: 123
+    vmid: 223
     newid: "{{ item }}"
     clone: test
-    storage: "{{storage}}"
+    storage: storage
     state: present
   timeout: 300 # 5m
     
@@ -22,7 +22,7 @@
     node: "{{node}}"
     vmid: "{{ item }}"
     ipconfig:
-      #ipconfig0: 'ip=192.168.69.100/24,gw=192.168.69.1'
+      #ipconfig0: 'ip=192.168.1.100/24,gw=192.168.1.1'
       ipconfig0: 'ip=dhcp'
     update: yes
 

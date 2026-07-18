@@ -1,5 +1,0 @@
-api_host: 10.10.10.10:8006
-api_user: root@pam
-api_password: "Password"
-node: Node
-storage: storage

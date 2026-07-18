@@ -6,10 +6,10 @@
     api_password: "{{api_password}}"
     node: "{{node}}"
     name: "win10-{{ item }}"
-    vmid: 125
+    vmid: 225
     newid: "{{ item }}"
     clone: test
-    storage: "{{storage}}"
+    storage: storage
     state: present
   timeout: 300 # 5m
   retries: 3

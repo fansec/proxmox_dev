@@ -1,4 +1,4 @@
-id: ansible_ssh_delete_test_import
+id: ansible_ssh_delete_test_import_99
 namespace: demo
 
 tasks:
@@ -16,7 +16,7 @@ tasks:
       inventory.ini: "{{ read('/ansible/inventory.ini') }}"
       id_rsa: "{{ secret('SSH_KEY') }}"
     commands:
-      - ansible-playbook --key-file id_rsa ansible/playbooks/delete_hosts.yaml
+      - ansible-playbook ansible/playbooks/delete_hosts.yaml -i ansible/hosts
     env:
       ANSIBLE_HOST_KEY_CHECKING: "False"
       ANSIBLE_REMOTE_USER: "admin"
